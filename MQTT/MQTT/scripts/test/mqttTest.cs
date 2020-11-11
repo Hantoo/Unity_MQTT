@@ -17,6 +17,7 @@ public class mqttTest : MonoBehaviour
 	[Header("Client Settings")] 
 	public string ipAddress;
 	public int broker_port;
+	public GameObject myMQTTObject;
 
 	[Header("Topics - # WildCard")]
 	public string topicPrefix;
@@ -29,7 +30,7 @@ public class mqttTest : MonoBehaviour
 	void Start()
 	{
 		// create client instance 
-		client = new MqttClient(IPAddress.Parse(ipAddress), broker_port, false, null);
+		client =new MqttClient(IPAddress.Parse(ipAddress), broker_port, false, null);
 
 		// register to message received 
 		client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
@@ -44,7 +45,7 @@ public class mqttTest : MonoBehaviour
 			client.Subscribe(new string[] {(topicPrefix + topic)}, new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE });
 		}
 		
-		routing = new MQTTRouting();
+		routing = myMQTTObject.GetComponent<MQTTRouting>();
 		
 
 		//client.Subscribe(new string[] { "hello/world" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE }); 
@@ -61,7 +62,7 @@ public class mqttTest : MonoBehaviour
 	{
 		if(e.Topic != null)
 			routing.routeMessage(e);
-		//Debug.Log("Received: " + System.Text.Encoding.UTF8.GetString(e.Message) + "," + e.Topic );
+		Debug.Log("Received: " + System.Text.Encoding.UTF8.GetString(e.Message) + "," + e.Topic );
 	} 
 
 
