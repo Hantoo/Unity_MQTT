@@ -21,7 +21,7 @@ public class MQTTRouting : MonoBehaviour
     public string Topic1 = "DRL/ProjectionMap/Control/";
     public string ListenForMe1;
     public string Incoming1 = "FirstMessageTopic";
-    public bool Messagebool2;
+    public bool Messagebool1;
 
     void Update()
     {
@@ -49,15 +49,16 @@ public class MQTTRouting : MonoBehaviour
                // if (Topic1.Substring(lastSlashToCheck, Topic1.Length - lastSlashToCheck) == ListenForMe1)
                     string Messagestring = System.Text.Encoding.UTF8.GetString(MqttMessage.Message);
 
-             //   if (Messagestring == ListenForMe1) //if using this as a trigger.remove to print whatever comes in on the topic.
-              //  {
+               if (Messagestring == ListenForMe1) //if using this as a trigger.remove to print whatever comes in on the topic.
+               {
                     Debug.Log("ListenForMe1 Detected");
                     //string Messagestring = System.Text.Encoding.UTF8.GetString(MqttMessage.Message);
                     Incoming1 = Messagestring;
+                    Messagebool1 = true;
                   //  myText.text = " Incoming Message is: " + Incoming1;
                  //   updateReceivedMessage();
 
-           // }
+            }
          }
       }
       catch (System.Exception e)
